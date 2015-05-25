@@ -132,10 +132,3 @@
 
 (defmacro behavior [& body]
  `(Behavior. #(do ~@body)))
-
-
-(def	es1	(from-interval	500))
-(def	take-es	(take-fn es1 5))
-(def c (subscribe	take-es	#(prn	"Take values: "	%)))
-(dispose c)
-(completed? take-es)
