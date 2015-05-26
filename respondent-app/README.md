@@ -1,4 +1,4 @@
-# respondant-app
+# respondent-app
 
 A ClojureScript library designed to ... well, that part is up to you.
 

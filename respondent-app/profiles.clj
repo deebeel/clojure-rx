@@ -15,13 +15,13 @@
           :resources-paths ["dev-resources"]
           :plugins [[com.cemerick/clojurescript.test "0.3.1"]]
           :cljsbuild
-          {:builds {:respondant-app
+          {:builds {:respondent-app
                     {:source-paths ["test/cljs"]
                      :compiler
                      {:output-dir "dev-resources/public/js"
-                      :source-map "dev-resources/public/js/respondant_app.js.map"}}}
+                      :source-map "dev-resources/public/js/respondent_app.js.map"}}}
            :test-commands {"phantomjs"
-                           ["phantomjs" :runner "dev-resources/public/js/respondant_app.js"]}}}
+                           ["phantomjs" :runner "dev-resources/public/js/respondent_app.js"]}}}
  :dev [:shared
        {:source-paths ["dev-resources/tools/http" "dev-resources/tools/repl"]
         :dependencies [[ring "1.3.1"]
@@ -29,7 +29,7 @@
                        [enlive "1.1.5"]]
         :plugins [[com.cemerick/austin "0.1.5"]]
         :cljsbuild
-        {:builds {:respondant-app
+        {:builds {:respondent-app
                   {:source-paths ["dev-resources/tools/repl"]
                    :compiler
                    {:optimizations :whitespace
@@ -43,13 +43,13 @@
  ;; simple profile.
  :simple [:shared
           {:cljsbuild
-           {:builds {:respondant-app
+           {:builds {:respondent-app
                      {:compiler {:optimizations :simple
                                  :pretty-print false}}}}}]
  ;; advanced profile
  :advanced [:shared
             {:cljsbuild
-             {:builds {:respondant-app
+             {:builds {:respondent-app
                        {:source-paths ["test/cljs"]
                         :compiler
                         {:optimizations :advanced
