@@ -13,6 +13,7 @@
 
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [rm-hull/monet "0.2.1"]
+                 [reagi "0.10.1"]
                  [org.clojure/clojurescript "0.0-2371"]]
 
   :plugins [[lein-cljsbuild "1.0.3"]]
