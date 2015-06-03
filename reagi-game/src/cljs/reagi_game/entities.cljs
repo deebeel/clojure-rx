@@ -52,56 +52,56 @@
 
 
 
-;; ;; (defn make-bullet-entity [monet-canvas key shape]
-;; ;;   (canvas/entity {:x (shape-x shape)
-;; ;;                   :y (shape-y shape)
-;; ;;                   :angle (shape-angle shape)}
-;; ;;                  (fn [value]
-;; ;;                    (when (not
-;; ;;                           (geo/contained?
-;; ;;                            {:x 0 :y 0
-;; ;;                             :w (.-width (:canvas monet-canvas))
-;; ;;                             :h (.-height (:canvas monet-canvas))}
-;; ;;                            {:x (shape-x shape)
-;; ;;                             :y (shape-y shape)
-;; ;;                             :r 5}))
-;; ;;                      (canvas/remove-entity monet-canvas key))
-;; ;;                    (move-forward! shape)
-;; ;;                    (update-shape shape value))
-;; ;;                  (fn [ctx val]
-;; ;;                    (-> ctx
-;; ;;                        canvas/save
-;; ;;                        (canvas/translate (:x val) (:y val))
-;; ;;                        (canvas/rotate (:angle val))
-;; ;;                        (canvas/fill-stype "red")
-;; ;;                        (canvas/circle {:x 10 :y 0 :r 5})
-;; ;;                         canvas/restore)))
 (defn make-bullet-entity [monet-canvas key shape]
-  (canvas/entity {:x (shape-x shape)	
-                  :y (shape-y shape)	
+  (canvas/entity {:x (shape-x shape)
+                  :y (shape-y shape)
                   :angle (shape-angle shape)}
                  (fn [value]
-                   (when (not	
-                          (geo/contained?	
-                           {:x	0 :y 0
-                            :w	(.-width (:canvas monet-canvas))
-                            :h	(.-height (:canvas monet-canvas))}
-                           {:x	(shape-x shape)	
-                            :y	(shape-y shape)	
-                            :r	5}))															(canvas/remove-entity monet-canvas key))
+                   (when (not
+                          (geo/contained?
+                           {:x 0 :y 0
+                            :w (.-width (:canvas monet-canvas))
+                            :h (.-height (:canvas monet-canvas))}
+                           {:x (shape-x shape)
+                            :y (shape-y shape)
+                            :r 5}))
+                     (canvas/remove-entity monet-canvas key))
                    (move-forward! shape)
-                   (->	value
-                        (assoc :x (shape-x shape))
-                        (assoc :y (shape-y shape))
-                        (assoc :angle (shape-angle shape))))
+                   (update-shape shape value))
                  (fn [ctx val]
-                   (->	ctx
-                        canvas/save
-                        (canvas/translate (:x val) (:y val))
-                        (canvas/rotate	(:angle	val))
-                        (canvas/fill-style "red")
-                        (canvas/circle	{:x 10 :y 0 :r 5})
+                   (-> ctx
+                       canvas/save
+                       (canvas/translate (:x val) (:y val))
+                       (canvas/rotate (:angle val))
+                       (canvas/fill-style "red")
+                       (canvas/circle {:x 10 :y 0 :r 5})
                         canvas/restore))))
+;; (defn make-bullet-entity [monet-canvas key shape]
+;;   (canvas/entity {:x (shape-x shape)	
+;;                   :y (shape-y shape)	
+;;                   :angle (shape-angle shape)}
+;;                  (fn [value]
+;;                    (when (not	
+;;                           (geo/contained?	
+;;                            {:x	0 :y 0
+;;                             :w	(.-width (:canvas monet-canvas))
+;;                             :h	(.-height (:canvas monet-canvas))}
+;;                            {:x	(shape-x shape)	
+;;                             :y	(shape-y shape)	
+;;                             :r	5}))															(canvas/remove-entity monet-canvas key))
+;;                    (move-forward! shape)
+;;                    (->	value
+;;                         (assoc :x (shape-x shape))
+;;                         (assoc :y (shape-y shape))
+;;                         (assoc :angle (shape-angle shape))))
+;;                  (fn [ctx val]
+;;                    (->	ctx
+;;                         canvas/save
+;;                         (canvas/translate (:x val) (:y val))
+;;                         (canvas/rotate	(:angle	val))
+;;                         (canvas/fill-style "red")
+;;                         (canvas/circle	{:x 10 :y 0 :r 5})
+;;                         canvas/restore))))
 
 (def speed 200)
 

@@ -4,15 +4,8 @@
             [clojure.set :as set]
             [reagi-game.entities :as entities :refer [move-forward! move-backward! rotate-left!	rotate-right! fire!]]))
 
-;;ASCII codes
-(def UP 38)
-(def RIGHT 39)
-(def DOWN 40)
-(def LEFT 37)
-(def FIRE 32)
-(def PAUSE 80)
-(def canvas-dom (.getElementById js/document "canvas"))
 
+(def canvas-dom (.getElementById js/document "canvas"))
 (def monet-canvas (canvas/init canvas-dom "2d"))
 (def ship (entities/shape-data (/ (.-width (:canvas monet-canvas)) 2)
                                (/ (.-height (:canvas monet-canvas)) 2)
@@ -21,6 +14,14 @@
 
 (canvas/add-entity monet-canvas	:ship-entity ship-entity)
 (canvas/draw-loop monet-canvas)
+
+;;ASCII codes
+(def UP 38)
+(def RIGHT 39)
+(def DOWN 40)
+(def LEFT 37)
+(def FIRE 32)
+(def PAUSE 80)
 
 
 (defn keydown-stream []
@@ -41,9 +42,34 @@
        (r/reduce (fn [acc [event-type key-code]]
                    (condp = event-type
                      ::down (conj acc key-code)
-                     ::up (conj acc key-code)
+                     ::up (disj acc key-code)
                      acc))
                  #{})
        (r/sample 25)))
 
 
+
+
+
+
+(defn filter-map [pred f & args]
+  (->> active-keys-stream
+       (r/filter (partial some pred))
+       (r/map (fn [_] (apply f args)))))
+
+
+(filter-map #{FIRE} fire! monet-canvas ship)
+(filter-map #{UP} move-forward!	ship)
+(filter-map #{DOWN} move-backward! ship)
+(filter-map #{RIGHT} rotate-right! ship)
+(filter-map #{LEFT} rotate-left! ship)
+
+(defn pause! []
+  (if @(:updating? monet-canvas)
+    (canvas/stop-updating monet-canvas)
+    (canvas/start-updating monet-canvas)))
+
+(->> active-keys-stream
+     (r/filter (partial some #{PAUSE}))
+     (r/throttle 100)
+     (r/map pause!))
